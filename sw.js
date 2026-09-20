@@ -1,5 +1,8 @@
 // 离线缓存：装到 iPad 主屏后没网也能练。
-const CACHE = 'sheet-v1';
+//
+// 策略是"网络优先、缓存兜底"：有网时永远拿到最新版本（避免更新后被旧缓存卡住），
+// 没网时回落到上一次成功加载的内容。
+const CACHE = 'sheet-v2';
 const ASSETS = [
   './',
   'index.html',
@@ -19,7 +22,12 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
+  e.waitUntil(
+    caches.open(CACHE)
+      // 单个文件取不到不该让整次安装失败
+      .then((c) => Promise.allSettled(ASSETS.map((url) => c.add(url))))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', (e) => {
@@ -33,6 +41,13 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
   e.respondWith(
-    caches.match(e.request).then((hit) => hit ?? fetch(e.request))
+    fetch(e.request)
+      .then((res) => {
+        // 顺手更新缓存，供下次断网时用
+        const copy = res.clone();
+        caches.open(CACHE).then((c) => c.put(e.request, copy)).catch(() => {});
+        return res;
+      })
+      .catch(() => caches.match(e.request).then((hit) => hit ?? caches.match('index.html')))
   );
 });

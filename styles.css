@@ -39,7 +39,7 @@ body {
   touch-action: manipulation;
 }
 
-#app { position: fixed; inset: 0; }
+#app { position: relative; height: 100%; }
 
 .screen {
   position: absolute;
@@ -252,6 +252,7 @@ body {
 .btn--primary { background: var(--brand); color: #fff; }
 .btn--ghost { background: transparent; border-color: var(--line); color: var(--ink-soft); }
 .btn--danger { background: var(--bad-soft); color: #8c2b33; }
+.btn--armed { background: var(--bad); color: #fff; }
 
 .field {
   display: flex; align-items: center; justify-content: space-between;

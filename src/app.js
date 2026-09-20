@@ -286,10 +286,27 @@ function bindSettings() {
   $('#set-hint').addEventListener('change', (e) =>
     store.updateSettings({ hintOnWrong: e.target.checked })
   );
-  $('#btn-reset').addEventListener('click', () => {
-    if (!confirm(i18n.t('settings.resetConfirm'))) return;
+  // 两次点击确认，比 confirm() 稳（沙箱里的弹窗可能被拦掉）
+  let resetArmed = false;
+  let resetTimer = null;
+  const btnReset = $('#btn-reset');
+  const disarmReset = () => {
+    clearTimeout(resetTimer);
+    resetArmed = false;
+    btnReset.textContent = i18n.t('settings.reset');
+    btnReset.classList.remove('btn--armed');
+  };
+  btnReset.addEventListener('click', () => {
+    if (!resetArmed) {
+      resetArmed = true;
+      btnReset.textContent = i18n.t('settings.resetConfirm');
+      btnReset.classList.add('btn--armed');
+      resetTimer = setTimeout(disarmReset, 4000);
+      return;
+    }
     const lang = i18n.getLang();
     store.resetAll();
+    disarmReset();
     applyLang(lang);
   });
   $('#btn-lang').addEventListener('click', () =>
