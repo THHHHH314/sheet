@@ -1,0 +1,11 @@
+{
+  "name": "sheet",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "五线谱识谱练习 / staff-reading trainer for kids",
+  "scripts": {
+    "test": "node --test",
+    "start": "python3 -m http.server 8080"
+  }
+}

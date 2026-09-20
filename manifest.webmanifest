@@ -1,0 +1,23 @@
+{
+  "name": "五线谱小达人 · Staff Star",
+  "short_name": "五线谱",
+  "description": "给孩子练识谱的小工具 / A staff-reading trainer for kids: on-screen keyboard, letters + solfège.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f7f3ea",
+  "theme_color": "#f7f3ea",
+  "icons": [
+    {
+      "src": "icons/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

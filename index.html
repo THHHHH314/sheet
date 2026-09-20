@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>五线谱小达人 · Staff Star</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="description" content="给孩子练识谱的小工具：屏幕键盘作答，音名 + 唱名，中英双语。A staff-reading trainer for kids: on-screen keyboard, letters + solfège, Chinese/English.">
+<meta name="theme-color" content="#f7f3ea">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="五线谱">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-180.png">
+<link rel="stylesheet" href="styles.css">
+<script src="vendor/vexflow-bravura.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <!-- 主界面 -->
+  <section class="screen" data-screen="home">
+    <div class="home">
+      <header class="home__head">
+        <h1 data-i18n="app.title">五线谱小达人</h1>
+        <div class="chips">
+          <span class="chip chip--star">★ <b id="total-stars">0</b></span>
+          <span class="chip" id="today-chip"></span>
+          <button class="chip chip--btn" id="btn-lang" data-i18n="home.langToggle">EN</button>
+        </div>
+      </header>
+      <div class="levels" id="levels"></div>
+      <footer class="home__foot">
+        <button class="btn btn--ghost" data-go="settings" data-i18n="home.settings">设置</button>
+        <span class="range-note" data-i18n="app.range"></span>
+      </footer>
+    </div>
+  </section>
+
+  <!-- 练习界面 -->
+  <section class="screen" data-screen="play">
+    <header class="topbar">
+      <button class="iconbtn" id="btn-quit" data-i18n-aria="play.back">‹</button>
+      <div class="progress"><div class="progress__bar" id="progress-bar"></div></div>
+      <div class="topbar__score"><span id="score-correct">0</span>/<span id="score-total">20</span></div>
+    </header>
+    <div class="stagewrap">
+      <div class="stage">
+        <div class="keysig-note" id="keysig-note"></div>
+        <div class="staff" id="staff"></div>
+      </div>
+      <p class="feedback" id="feedback">&nbsp;</p>
+    </div>
+    <div class="kbwrap">
+      <div class="keyboard" id="keyboard"></div>
+    </div>
+  </section>
+
+  <!-- 结果界面 -->
+  <section class="screen" data-screen="result">
+    <div class="card">
+      <div class="stars" id="result-stars">★★★</div>
+      <h2 id="result-title"></h2>
+      <div class="stats">
+        <div class="stat"><b id="result-acc">0%</b><span data-i18n="result.accuracy"></span></div>
+        <div class="stat"><b id="result-right">0</b><span data-i18n="result.firstTry"></span></div>
+        <div class="stat"><b id="result-time">0:00</b><span data-i18n="result.time"></span></div>
+      </div>
+      <div class="weak" id="result-weak"></div>
+      <p class="unlock" id="result-unlock" hidden></p>
+      <div class="row">
+        <button class="btn btn--ghost" data-go="home" data-i18n="result.home"></button>
+        <button class="btn btn--primary" id="btn-again" data-i18n="result.again"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 设置界面 -->
+  <section class="screen" data-screen="settings">
+    <div class="card card--wide">
+      <h2 data-i18n="settings.title"></h2>
+      <label class="field">
+        <span data-i18n="settings.lang"></span>
+        <select id="set-lang">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+        </select>
+      </label>
+      <label class="field">
+        <span data-i18n="settings.labelMode"></span>
+        <select id="set-labelmode">
+          <option value="both" data-i18n="settings.labelMode.both"></option>
+          <option value="letter" data-i18n="settings.labelMode.letter"></option>
+          <option value="solfege" data-i18n="settings.labelMode.solfege"></option>
+        </select>
+      </label>
+      <label class="field">
+        <span data-i18n="settings.keyLabels"></span>
+        <select id="set-keylabels">
+          <option value="auto" data-i18n="settings.keyLabels.auto"></option>
+          <option value="always" data-i18n="settings.keyLabels.always"></option>
+          <option value="never" data-i18n="settings.keyLabels.never"></option>
+        </select>
+      </label>
+      <label class="field">
+        <span data-i18n="settings.sound"></span>
+        <input type="checkbox" id="set-sound">
+      </label>
+      <label class="field">
+        <span data-i18n="settings.hint"></span>
+        <input type="checkbox" id="set-hint">
+      </label>
+      <div class="row">
+        <button class="btn btn--danger" id="btn-reset" data-i18n="settings.reset"></button>
+        <button class="btn btn--primary" data-go="home" data-i18n="settings.done"></button>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
