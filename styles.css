@@ -162,7 +162,8 @@ body {
 /* ---------- 键盘 ---------- */
 .kbwrap { height: var(--kb-h); padding: 8px 10px max(8px, var(--safe-b)); }
 .keyboard {
-  position: relative; height: 100%; width: 100%;
+  position: relative; height: 100%;
+  width: 100%; max-width: var(--kb-max-w, 100%); margin-inline: auto;
   background: #2a2740; border-radius: 12px; padding: 6px 6px 0;
   overflow: hidden;
   touch-action: none;

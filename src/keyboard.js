@@ -5,7 +5,11 @@ import {
   letterName, solfegeName, noteLabel,
 } from './notes.js';
 
-const BLACK_WIDTH_RATIO = 0.62;
+// 真钢琴：白键宽 23.5mm、黑键宽 13.7mm，比例约 0.58
+const BLACK_WIDTH_RATIO = 0.58;
+// 白键宽度上限，约等于真钢琴键宽（23.5mm ≈ 90px @96dpi）。
+// 关卡用到的音少时，键不会被拉成大板砖；音多放不下时再整体等比缩小。
+const MAX_WHITE_KEY_PX = 90;
 
 export class Keyboard {
   constructor(host) {
@@ -32,6 +36,7 @@ export class Keyboard {
     const n = whites.length;
     const whitePct = 100 / n;
     const blackPct = whitePct * BLACK_WIDTH_RATIO;
+    this.host.style.setProperty('--kb-max-w', `${n * MAX_WHITE_KEY_PX}px`);
 
     whites.forEach((spelling, i) => {
       const midi = toMidi(spelling);
